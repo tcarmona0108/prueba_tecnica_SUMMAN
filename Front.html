@@ -5,14 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Prueba Técnica | SUMMAN — Tomás Carmona Salazar</title>
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- CSV + Charts (CDN) -->
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <style>
     :root{
@@ -22,11 +17,9 @@
       --bg:#f8fafc;
       --card:#ffffff;
       --line:#e2e8f0;
-      --shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
       --radius:16px;
-      --radius-sm:12px;
     }
-
     *{box-sizing:border-box}
     body{
       margin:0;
@@ -34,313 +27,92 @@
       color:var(--text);
       background:linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
     }
-
     a{color:inherit}
-    .container{
-      max-width:1120px;
-      margin:0 auto;
-      padding:24px;
-    }
-
-    /* Top bar */
+    .container{max-width:1120px;margin:0 auto;padding:24px;}
     .topbar{
-      position:sticky; top:0; z-index:50;
-      background:rgba(255,255,255,0.85);
+      position:sticky;top:0;z-index:50;
+      background:rgba(255,255,255,0.86);
       backdrop-filter:saturate(180%) blur(10px);
       border-bottom:1px solid var(--line);
     }
     .topbar-inner{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:16px;
-      padding:12px 24px;
-      max-width:1120px;
-      margin:0 auto;
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      padding:12px 24px;max-width:1120px;margin:0 auto;
     }
-    .brand{
-      display:flex; align-items:center; gap:12px;
-      font-weight:700;
-      letter-spacing:-0.02em;
-    }
-    .brand img{height:28px; width:auto}
-    .nav{
-      display:flex; align-items:center; gap:14px;
-      font-size:14px;
-      color:var(--muted);
-    }
-    .nav a{
-      text-decoration:none;
-      padding:8px 10px;
-      border-radius:10px;
-    }
-    .nav a:hover{
-      background:#f1f5f9;
-      color:var(--text);
-    }
+    .brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:-0.02em;}
+    .brand img{height:28px;width:auto}
+    .nav{display:flex;gap:14px;font-size:14px;color:var(--muted);}
+    .nav a{text-decoration:none;padding:8px 10px;border-radius:10px;}
+    .nav a:hover{background:#f1f5f9;color:var(--text);}
+    @media (max-width: 980px){.nav{display:none}}
 
-    /* Hero */
     .hero{
-      margin-top:22px;
-      padding:26px;
-      border-radius:var(--radius);
+      margin-top:22px;padding:26px;border-radius:var(--radius);
       background:linear-gradient(135deg, rgba(160,194,45,0.18) 0%, rgba(255,255,255,1) 48%, rgba(160,194,45,0.10) 100%);
       border:1px solid rgba(160,194,45,0.35);
       box-shadow:var(--shadow);
     }
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap:18px;
-      align-items:start;
-    }
+    .hero-grid{display:grid;grid-template-columns:1.2fr 0.8fr;gap:18px;align-items:start;}
+    @media (max-width: 980px){.hero-grid{grid-template-columns:1fr}}
     .kicker{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      font-size:12px;
-      font-weight:600;
-      color:#14532d;
+      display:inline-flex;align-items:center;gap:10px;
+      font-size:12px;font-weight:600;color:#14532d;
       background:rgba(160,194,45,0.25);
       border:1px solid rgba(160,194,45,0.40);
-      padding:6px 10px;
-      border-radius:999px;
+      padding:6px 10px;border-radius:999px;
     }
-    h1{
-      margin:14px 0 10px 0;
-      font-size:38px;
-      line-height:1.1;
-      letter-spacing:-0.03em;
-    }
-    .subtitle{
-      color:var(--muted);
-      font-size:15px;
-      line-height:1.55;
-      margin:0;
-      max-width:70ch;
-    }
-
-    /* Cards */
+    h1{margin:14px 0 10px 0;font-size:38px;line-height:1.1;letter-spacing:-0.03em;}
+    .subtitle{color:var(--muted);font-size:15px;line-height:1.55;margin:0;max-width:70ch;}
     .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
+      background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
       box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
       padding:18px;
     }
-    .card h3{
-      margin:0 0 8px 0;
-      font-size:15px;
-      letter-spacing:-0.01em;
-    }
-    .card p{
-      margin:0;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.55;
-    }
-
+    .card h3{margin:0 0 8px 0;font-size:15px;letter-spacing:-0.01em;}
+    .card p{margin:0;color:var(--muted);font-size:14px;line-height:1.55;}
     .pill{
-      display:inline-flex; align-items:center;
-      gap:8px;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:#fff;
-      font-size:13px;
-      text-decoration:none;
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;border:1px solid var(--line);
+      background:#fff;font-size:13px;text-decoration:none;
     }
     .pill strong{font-weight:700}
-    .pill .dot{
-      width:10px; height:10px; border-radius:50%;
-      background:var(--brand);
-      display:inline-block;
-    }
-
+    .pill .dot{width:10px;height:10px;border-radius:50%;background:var(--brand);display:inline-block;}
     .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      background:var(--brand);
-      color:#0b1220;
-      border:none;
-      font-weight:700;
-      padding:10px 12px;
-      border-radius:12px;
-      text-decoration:none;
-      cursor:pointer;
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      background:var(--brand);color:#0b1220;border:none;font-weight:700;
+      padding:10px 12px;border-radius:12px;text-decoration:none;cursor:pointer;
     }
-    .btn.secondary{
-      background:#fff;
-      border:1px solid var(--line);
-      color:var(--text);
-      font-weight:600;
-    }
+    .btn.secondary{background:#fff;border:1px solid var(--line);color:var(--text);font-weight:600;}
 
-    /* Sections */
     section{margin-top:22px}
-    .section-title{
-      display:flex; align-items:flex-end; justify-content:space-between;
-      gap:16px;
-      margin:22px 0 10px 0;
-    }
-    .section-title h2{
-      margin:0;
-      font-size:20px;
-      letter-spacing:-0.02em;
-    }
-    .section-title span{
-      color:var(--muted);
-      font-size:13px;
-    }
+    .section-title{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin:22px 0 10px 0;}
+    .section-title h2{margin:0;font-size:20px;letter-spacing:-0.02em;}
+    .section-title span{color:var(--muted);font-size:13px;}
 
-    /* Grid */
-    .grid-2{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-    }
-    .grid-3{
-      display:grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap:12px;
-    }
-    @media (max-width: 980px){
-      .hero-grid{grid-template-columns:1fr}
-      .grid-2{grid-template-columns:1fr}
-      .grid-3{grid-template-columns:1fr}
-      .nav{display:none}
-    }
-
-    /* Embeds (Power BI / PPT) */
     .embed{
-      border-radius:var(--radius);
-      overflow:hidden;
-      border:1px solid var(--line);
-      background:#fff;
-      box-shadow:var(--shadow);
+      border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);
+      background:#fff;box-shadow:var(--shadow);
     }
-    .embed .ratio{
-      position:relative;
-      width:100%;
-      padding-top:62.25%; /* default: 600x373.5 */
-    }
-    .embed.ratio-16x9 .ratio{ padding-top:56.25%; }
-    .embed iframe{
-      position:absolute; inset:0;
-      width:100%; height:100%;
-      border:0;
-    }
+    .embed .ratio{position:relative;width:100%;padding-top:62.25%;}
+    .embed.ratio-16x9 .ratio{padding-top:56.25%;}
+    .embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
 
-    /* Tables */
-    .table-wrap{
-      overflow:auto;
-      border-radius:var(--radius-sm);
-      border:1px solid var(--line);
-      background:#fff;
-    }
-    table{
-      width:100%;
-      border-collapse:collapse;
-      font-size:13px;
-      min-width: 720px;
-    }
-    th, td{
-      padding:10px 10px;
-      border-bottom:1px solid var(--line);
-      vertical-align:top;
-      text-align:left;
-      white-space:nowrap;
-    }
-    th{
-      background:#f8fafc;
-      color:#0f172a;
-      font-weight:700;
-      position:sticky;
-      top:0;
-    }
-
-    /* Charts */
-    .chart-holder{ height:320px; }
-    .hint{
-      color:var(--muted);
-      font-size:12px;
-      margin-top:8px;
-      line-height:1.45;
-    }
-
-    /* Gallery */
-    .gallery-item{
+    .img-card{
       border:1px solid var(--line);
       border-radius:var(--radius);
       overflow:hidden;
       background:#fff;
       box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
-      cursor:pointer;
     }
-    .gallery-item img{
-      width:100%;
-      display:block;
-      aspect-ratio: 16 / 9;
-      object-fit:cover;
-      background:#f1f5f9;
-    }
-    .gallery-caption{
-      padding:10px 12px;
-      font-size:13px;
-      color:var(--muted);
-      line-height:1.35;
-    }
-    .callout{
-      border-left:4px solid var(--brand);
-      padding:12px 12px;
-      background:#fff;
-      border-radius:12px;
-      border:1px solid var(--line);
-    }
-    code.inline{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      background:#f1f5f9;
-      padding:2px 6px;
-      border-radius:8px;
-      font-size:12px;
-    }
+    .img-card img{width:100%;display:block;background:#fff;object-fit:contain;}
+    .img-caption{padding:10px 12px;font-size:13px;color:var(--muted);line-height:1.35;}
 
-    /* Lightbox */
-    .lightbox{
-      position:fixed;
-      inset:0;
-      background:rgba(15,23,42,0.78);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:20px;
-      z-index:1000;
-    }
-    .lightbox.open{display:flex;}
-    .lightbox img{
-      max-width:min(1120px, 96vw);
-      max-height:92vh;
-      border-radius:16px;
-      box-shadow:var(--shadow);
-      background:#fff;
-    }
-    .lightbox .close{
-      position:absolute;
-      top:14px; right:14px;
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:12px;
-      padding:8px 10px;
-      cursor:pointer;
-      font-weight:700;
-    }
-
-    footer{
-      margin:26px 0 8px;
-      color:var(--muted);
-      font-size:12px;
-      text-align:center;
-    }
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    @media (max-width: 980px){.grid-2{grid-template-columns:1fr}}
+    ul.clean{margin:0;padding-left:18px;color:var(--muted);font-size:14px;line-height:1.55;}
+    .dl-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;}
+    footer{margin:26px 0 8px;color:var(--muted);font-size:12px;text-align:center;}
+    code{background:#f1f5f9;padding:2px 6px;border-radius:8px;font-size:12px}
   </style>
 </head>
 
@@ -352,23 +124,22 @@
         <span>Prueba Técnica — Tomás Carmona Salazar</span>
       </div>
       <nav class="nav">
-        <a href="#overview">Resumen</a>
         <a href="#punto1">Punto 1</a>
         <a href="#punto2">Punto 2</a>
-        <a href="#resultados">Resultados</a>
+        <a href="#descargas">Descargas</a>
       </nav>
     </div>
   </div>
 
-  <div class="container" id="overview">
+  <div class="container">
     <div class="hero">
       <div class="hero-grid">
         <div>
           <span class="kicker">Entrega Técnica · Analítica & ML</span>
           <h1>EDA, Segmentación y Machine Learning</h1>
           <p class="subtitle">
-            Página ejecutiva de entregables: EDA en Power BI, evidencia del ETL y modelo relacional,
-            y el punto 2 con segmentación (2.1) + modelo predictivo (2.2).
+            Página de entrega: EDA publicado en Power BI, evidencia del modelo relacional y accesos al desarrollo del punto 2.
+            Los archivos finales (PPT/CSVs) se publican para descarga directa.
           </p>
 
           <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
@@ -381,12 +152,12 @@
         </div>
 
         <div class="card">
-          <h3>Entregables visibles</h3>
+          <h3>Entregables</h3>
           <p>
-            • Power BI embebido (EDA)<br>
-            • Evidencia ETL (imágenes) + modelo relacional<br>
-            • PPT Punto 2 embebido (SharePoint)<br>
-            • Tablas y gráfico desde CSVs del modelo (sin subir archivos)
+            • Reporte Power BI (EDA)<br>
+            • Imagen del modelo relacional<br>
+            • Presentación del Punto 2 (Canva)<br>
+            • Descargas de resultados (CSVs/PPT)
           </p>
         </div>
       </div>
@@ -395,21 +166,16 @@
     <!-- PUNTO 1 -->
     <section id="punto1">
       <div class="section-title">
-        <h2>Punto 1 — EDA (Power BI) + Evidencia de ETL</h2>
-        <span>Diagnóstico, limpieza y modelo relacional</span>
+        <h2>Punto 1 — Análisis Exploratorio (EDA) + ETL</h2>
+        <span>Power BI + modelo relacional</span>
       </div>
 
       <div class="card">
-        <h3>Resumen del ETL (limpieza y consistencia)</h3>
+        <h3>Resumen del ETL</h3>
         <p>
-          Se realizó limpieza y transformación enfocada en consistencia de llaves, calidad de campos y preparación para análisis:
-          (1) eliminación de duplicados en tablas maestras, (2) conversión de campos numéricos con valores no numéricos,
-          (3) tratamiento de outliers y valores atípicos en la tabla principal de ventas,
-          (4) estandarización/ortografía en algunos campos categóricos,
-          (5) corrección de valores mal imputados y validación básica de integridad referencial.
-        </p>
-        <p class="hint">
-          Este bloque se apoya con pantallazos (abajo) del proceso y con la imagen del modelo relacional.
+          Limpieza y transformación enfocada en consistencia y calidad: eliminación de duplicados en tablas maestras,
+          normalización de tipos numéricos (Sales/Profit), revisión de outliers en ventas, correcciones en campos categóricos
+          y validaciones de integridad para el modelo analítico.
         </p>
       </div>
 
@@ -422,44 +188,24 @@
         <div class="ratio">
           <iframe title="EDA_PruebaTecnica_SUMMAN"
             src="https://app.powerbi.com/view?r=eyJrIjoiODFmNTg2ZjMtYjMwYi00NGU4LThlYzMtNDFiZWVkY2Q3MWY1IiwidCI6IjU3N2ZjMWQ4LTA5MjItNDU4ZS04N2JmLWVjNGY0NTVlYjYwMCIsImMiOjR9"
-            allowfullscreen="true">
-          </iframe>
-        </div>
-      </div>
-
-      <div class="section-title" style="margin-top:14px;">
-        <h2>ETL — Pantallazos del proceso</h2>
-        <span>Click para ampliar</span>
-      </div>
-
-      <div class="grid-3">
-        <div class="gallery-item" data-full="./assets/img/etl_01.png">
-          <img src="./assets/img/etl_01.png" alt="ETL 01" onerror="this.style.display='none'">
-          <div class="gallery-caption"><strong>ETL 1:</strong> Duplicados en tablas maestras (Customer/Product) y limpieza inicial.</div>
-        </div>
-        <div class="gallery-item" data-full="./assets/img/etl_02.png">
-          <img src="./assets/img/etl_02.png" alt="ETL 02" onerror="this.style.display='none'">
-          <div class="gallery-caption"><strong>ETL 2:</strong> Conversión de numéricos (Sales/Profit), valores no válidos y tratamiento de outliers.</div>
-        </div>
-        <div class="gallery-item" data-full="./assets/img/etl_03.png">
-          <img src="./assets/img/etl_03.png" alt="ETL 03" onerror="this.style.display='none'">
-          <div class="gallery-caption"><strong>ETL 3:</strong> Estandarización de campos, ortografía y validaciones de consistencia.</div>
+            allowfullscreen="true"></iframe>
         </div>
       </div>
 
       <div class="section-title" style="margin-top:14px;">
         <h2>Modelo relacional</h2>
-        <span>Click para ampliar</span>
+        <span>Imagen del modelo en Power BI</span>
       </div>
 
-      <div class="gallery-item" data-full="./assets/img/modelo_relacional.png" style="cursor:pointer;">
-        <img src="./assets/img/modelo_relacional.png" alt="Modelo relacional" onerror="this.style.display='none'" style="aspect-ratio:auto; object-fit:contain; padding:12px;">
-        <div class="gallery-caption"><strong>Modelo relacional:</strong> esquema de tablas y relaciones utilizado para análisis y modelamiento.</div>
+      <div class="img-card">
+        <img src="./assets/img/modelo_relacional.png" alt="Modelo relacional" />
+        <div class="img-caption">
+          <strong>Modelo relacional:</strong> esquema de tablas y relaciones utilizado para el EDA y el modelamiento.
+        </div>
       </div>
 
-      <p class="hint">
-        Cuando me compartas las imágenes, basta con guardarlas con estos nombres en <code class="inline">./assets/img/</code>
-        (o actualizas los nombres en el HTML).
+      <p style="color:var(--muted); font-size:12px; margin-top:10px;">
+        La imagen debe existir en: <code>./assets/img/modelo_relacional.png</code>.
       </p>
     </section>
 
@@ -467,355 +213,83 @@
     <section id="punto2">
       <div class="section-title">
         <h2>Punto 2 — Segmentación (2.1) y Machine Learning (2.2)</h2>
-        <span>Repositorio + presentación + resultados</span>
+        <span>Presentación + repositorio</span>
       </div>
 
       <div class="grid-2">
         <div class="card">
-          <h3>2.1 Segmentación de clientes</h3>
-          <p>
-            Customer 360 (1 fila por cliente) integrando valor, RFM, descuentos, devoluciones, logística y diversidad de compra.
-            Clustering con K-Means sobre variables numéricas, con escalado robusto, transformaciones y evaluación interna + estabilidad.
-          </p>
-          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-            <a class="btn secondary" href="#resultados">Ver resultados en tablas</a>
+          <h3>Repositorio (código)</h3>
+          <p>Implementación del flujo de segmentación y del modelo predictivo.</p>
+          <div class="dl-row">
+            <a class="btn" href="https://github.com/tcarmona0108/prueba_tecnica_SUMMAN" target="_blank" rel="noreferrer">Abrir GitHub</a>
           </div>
         </div>
 
         <div class="card">
-          <h3>2.2 Predicción de devoluciones (ML)</h3>
-          <p>
-            Modelo supervisado a nivel orden para priorizar riesgo de devolución. Validación temporal,
-            features sin leakage (histórico con shift) y evaluación con lift por deciles para toma de decisiones operativas.
-          </p>
-          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-            <a class="btn" href="https://github.com/tcarmona0108/prueba_tecnica_SUMMAN" target="_blank" rel="noreferrer">Abrir repositorio</a>
-            <a class="btn secondary" href="#resultados">Ver métricas / lift</a>
+          <h3>Presentación (Canva)</h3>
+          <p>Versión final del Punto 2 (2.1 + 2.2) en formato web.</p>
+          <div class="dl-row">
+            <a class="btn" href="https://pruebatecnicasumman.my.canva.site/" target="_blank" rel="noreferrer">Abrir presentación</a>
           </div>
         </div>
       </div>
 
       <div class="section-title" style="margin-top:14px;">
         <h2>Presentación Punto 2 (embebida)</h2>
-        <span>SharePoint / PowerPoint Online</span>
+        <span>Canva</span>
       </div>
 
       <div class="embed ratio-16x9">
         <div class="ratio">
-          <!-- Intento de embed directo. Si SharePoint requiere login, lo pedirá aquí. -->
-          <iframe
-            title="Punto 2 - Presentación"
-            src="https://unaledu-my.sharepoint.com/:p:/g/personal/tcarmona_unal_edu_co/IQA_sCC08GrQR5qlspVZ5XteAdDX_U-dQnyGDWvAwPlRZNU?e=LtXAyN&nav=eyJzSWQiOjI2OH0"
-            allowfullscreen="true">
-          </iframe>
+          <iframe title="Punto 2 - Presentación (Canva)"
+            src="https://pruebatecnicasumman.my.canva.site/"
+            allowfullscreen="true"></iframe>
         </div>
       </div>
 
-      <div class="callout" style="margin-top:12px;">
-        <strong>Si el embed no carga (por permisos o navegador)</strong><br>
-        <span style="color:var(--muted); font-size:13px;">
-          Usa el botón para abrir en otra pestaña (misma experiencia, pero sin restricciones de iframe).
-        </span>
-        <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn" href="https://unaledu-my.sharepoint.com/:p:/g/personal/tcarmona_unal_edu_co/IQA_sCC08GrQR5qlspVZ5XteAdDX_U-dQnyGDWvAwPlRZNU?e=LtXAyN&nav=eyJzSWQiOjI2OH0" target="_blank" rel="noreferrer">
-            Abrir presentación
-          </a>
-          <!-- opcional: descarga local si la publicas en /docs -->
-          <a class="btn secondary" href="./docs/Punto2_SUMMAN_Tomas_Carmona.pptx" download>
-            Descargar PPT (opcional)
-          </a>
-        </div>
-      </div>
+      <p style="color:var(--muted); font-size:12px; margin-top:10px;">
+        Si el navegador bloquea el iframe por políticas de terceros, el botón “Abrir presentación” funciona siempre.
+      </p>
     </section>
 
-    <!-- RESULTADOS DESDE CSV -->
-    <section id="resultados">
+    <!-- DESCARGAS -->
+    <section id="descargas">
       <div class="section-title">
-        <h2>Resultados (desde CSV)</h2>
-        <span>Visualización + descarga</span>
+        <h2>Descargas</h2>
+        <span>Archivos finales</span>
       </div>
 
       <div class="grid-2">
         <div class="card">
-          <h3>Perfil por cluster (2.1)</h3>
-          <p>Archivo: <code class="inline">./data/cluster_profile_summary.csv</code></p>
-          <div class="table-wrap" style="margin-top:10px;">
-            <table id="clusterProfileTable">
-              <thead><tr><th>Cargando...</th></tr></thead>
-              <tbody></tbody>
-            </table>
+          <h3>PPTX (opcional)</h3>
+          <p>
+            Si decides publicar también el archivo, déjalo en <code>./downloads/</code> para descarga directa.
+          </p>
+          <div class="dl-row">
+            <a class="btn secondary" href="./downloads/Punto2_SUMMAN_Tomas_Carmona.pptx" download>Descargar PPTX</a>
           </div>
-          <div style="margin-top:10px;">
-            <a class="btn secondary" href="./data/cluster_profile_summary.csv" download>Descargar CSV</a>
-          </div>
+          <p style="color:var(--muted); font-size:12px; margin-top:10px;">
+            Alternativa recomendada: versión web en Canva (Punto 2).
+          </p>
         </div>
 
         <div class="card">
-          <h3>Selección de modelo (2.1)</h3>
-          <p>Archivo: <code class="inline">./data/model_selection_results.csv</code></p>
-          <div class="table-wrap" style="margin-top:10px;">
-            <table id="modelSelectionTable">
-              <thead><tr><th>Cargando...</th></tr></thead>
-              <tbody></tbody>
-            </table>
-          </div>
-          <div style="margin-top:10px;">
-            <a class="btn secondary" href="./data/model_selection_results.csv" download>Descargar CSV</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="grid-2" style="margin-top:14px;">
-        <div class="card">
-          <h3>Lift por deciles (2.2)</h3>
-          <p>Archivo: <code class="inline">./data/lift_deciles_hgb.csv</code></p>
-          <div class="chart-holder">
-            <canvas id="liftChart"></canvas>
-          </div>
-          <div style="margin-top:10px;">
-            <a class="btn secondary" href="./data/lift_deciles_hgb.csv" download>Descargar CSV</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Métricas operativas Top 10% (2.2)</h3>
-          <p>Archivo: <code class="inline">./data/order_return_predictions.csv</code></p>
-          <div style="margin-top:12px;" id="mlMetrics">
-            <p style="color:var(--muted); margin:0;">Cargando...</p>
-          </div>
-          <div style="margin-top:10px;">
-            <a class="btn secondary" href="./data/order_return_predictions.csv" download>Descargar CSV</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:14px;">
-        <h3>Descarga adicional</h3>
-        <p>Dataset completo de segmentación (opcional): <code class="inline">./data/customer_segmentation_output.csv</code></p>
-        <div style="margin-top:10px;">
-          <a class="btn secondary" href="./data/customer_segmentation_output.csv" download>Descargar customer_segmentation_output.csv</a>
+          <h3>CSVs (resultados)</h3>
+          <p>Archivos generados por los modelos (segmentación y ML):</p>
+          <ul class="clean">
+            <li><a href="./downloads/cluster_profile_summary.csv" download>cluster_profile_summary.csv</a></li>
+            <li><a href="./downloads/customer_segmentation_output.csv" download>customer_segmentation_output.csv</a></li>
+            <li><a href="./downloads/model_selection_results.csv" download>model_selection_results.csv</a></li>
+            <li><a href="./downloads/order_return_predictions.csv" download>order_return_predictions.csv</a></li>
+            <li><a href="./downloads
+::contentReference[oaicite:0]{index=0}
+/model_performance_metrics.csv" download>model_performance_metrics.csv</a></li>
+          </ul>
         </div>
       </div>
     </section>
 
     <footer>
-      SUMMAN · Prueba Técnica — Página de entregables · Tomás Carmona Salazar
+      &copy; 2024 Tomás Carmona Salazar. Todos los derechos reservados.
     </footer>
   </div>
-
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <button class="close" id="lightboxClose" type="button">Cerrar</button>
-    <img id="lightboxImg" alt="Imagen ampliada" />
-  </div>
-
-  <script>
-    const BRAND = "#A0C22D";
-
-    function parseCSV(url, onDone){
-      Papa.parse(url, {
-        download:true,
-        header:true,
-        skipEmptyLines:true,
-        dynamicTyping:false,
-        complete: (res) => onDone(res.data),
-        error: () => onDone(null)
-      });
-    }
-
-    function escapeHtml(v){
-      if(v === null || v === undefined) return "";
-      return String(v)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
-
-    function renderTable(tableEl, rows, maxRows=25){
-      if(!rows || !rows.length){
-        tableEl.innerHTML = "<thead><tr><th>No hay datos</th></tr></thead><tbody></tbody>";
-        return;
-      }
-      const cols = Object.keys(rows[0]);
-      const head = `<thead><tr>${cols.map(c=>`<th>${escapeHtml(c)}</th>`).join("")}</tr></thead>`;
-      const bodyRows = rows.slice(0, maxRows).map(r=>{
-        return `<tr>${cols.map(c=>`<td>${escapeHtml(r[c])}</td>`).join("")}</tr>`;
-      }).join("");
-      tableEl.innerHTML = head + `<tbody>${bodyRows}</tbody>`;
-    }
-
-    function toNum(x){
-      const n = Number(String(x).replace(",", "."));
-      return Number.isFinite(n) ? n : NaN;
-    }
-
-    // Lift chart
-    let liftChart = null;
-    function renderLiftChart(rows){
-      if(!rows || !rows.length) return;
-
-      const sorted = [...rows].sort((a,b)=>toNum(a.decile)-toNum(b.decile));
-      const labels = sorted.map(r => String(r.decile));
-      const returnRate = sorted.map(r => toNum(r.return_rate));
-      const cumShare = sorted.map(r => toNum(r.cum_return_share));
-
-      const ctx = document.getElementById("liftChart");
-      if(liftChart) liftChart.destroy();
-
-      liftChart = new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels,
-          datasets: [
-            {
-              label: "Return rate (por decil)",
-              data: returnRate,
-              borderWidth: 0,
-              backgroundColor: "rgba(160,194,45,0.55)"
-            },
-            {
-              label: "Captura acumulada (cum_return_share)",
-              data: cumShare,
-              type: "line",
-              yAxisID: "y1",
-              borderColor: BRAND,
-              backgroundColor: BRAND,
-              tension: 0.25,
-              pointRadius: 3
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { position: "bottom" } },
-          scales: {
-            y: {
-              beginAtZero:true,
-              ticks: { callback: v => (v*100).toFixed(0) + "%" }
-            },
-            y1: {
-              beginAtZero:true,
-              position: "right",
-              grid: { drawOnChartArea:false },
-              ticks: { callback: v => (v*100).toFixed(0) + "%" }
-            }
-          }
-        }
-      });
-    }
-
-    // Metrics from order_return_predictions.csv
-    function computeTopPctMetrics(rows, topPct=0.10){
-      if(!rows || !rows.length) return null;
-
-      const yKey = Object.keys(rows[0]).find(k => k.toLowerCase().includes("y_true"));
-      const pKey = Object.keys(rows[0]).find(k => k.toLowerCase().includes("p_return"));
-
-      if(!yKey || !pKey) return null;
-
-      const clean = rows
-        .map(r => ({ y: toNum(r[yKey]), p: toNum(r[pKey]) }))
-        .filter(r => Number.isFinite(r.y) && Number.isFinite(r.p));
-
-      if(clean.length === 0) return null;
-
-      const sorted = [...clean].sort((a,b)=>b.p-a.p);
-      const nTop = Math.max(1, Math.floor(sorted.length * topPct));
-      const top = sorted.slice(0, nTop);
-
-      const totalPos = clean.reduce((acc,r)=>acc+(r.y===1?1:0), 0);
-      const tp = top.reduce((acc,r)=>acc+(r.y===1?1:0), 0);
-      const fp = nTop - tp;
-      const fn = totalPos - tp;
-
-      const precision = tp / Math.max(1, (tp+fp));
-      const recall = tp / Math.max(1, (tp+fn));
-      const baseRate = totalPos / clean.length;
-      const topRate = tp / nTop;
-      const lift = topRate / Math.max(1e-9, baseRate);
-
-      return { n: clean.length, nTop, totalPos, tp, fp, fn, precision, recall, baseRate, topRate, lift };
-    }
-
-    function renderMlMetrics(rows){
-      const box = document.getElementById("mlMetrics");
-      const m = computeTopPctMetrics(rows, 0.10);
-      if(!m){
-        box.innerHTML = `<p style="color:var(--muted); margin:0;">No fue posible calcular métricas. Verifica columnas y_true y probabilidad.</p>`;
-        return;
-      }
-
-      box.innerHTML = `
-        <div class="table-wrap" style="min-width:unset;">
-          <table style="min-width:unset;">
-            <thead><tr><th>Métrica</th><th>Valor</th></tr></thead>
-            <tbody>
-              <tr><td>N (test)</td><td>${m.n}</td></tr>
-              <tr><td>Top 10% (n)</td><td>${m.nTop}</td></tr>
-              <tr><td>Base rate (devoluciones)</td><td>${(m.baseRate*100).toFixed(2)}%</td></tr>
-              <tr><td>Return rate en Top 10%</td><td>${(m.topRate*100).toFixed(2)}%</td></tr>
-              <tr><td>Lift (Top 10%)</td><td>${m.lift.toFixed(2)}×</td></tr>
-              <tr><td>Precision (Top 10%)</td> <td>${(m.precision*100).toFixed(2)}%</td></tr>
-              <tr><td>Recall (Top 10%)</td>    <td>${(m.recall*100).toFixed(2)}%</td></tr>
-              <tr><td>TP / FP / FN</td><td>${m.tp} / ${m.fp} / ${m.fn}</td></tr>
-            </tbody>
-          </table>
-        </div>
-      `;
-    }
-
-    // Load CSVs (fixed paths)
-    function loadAll(){
-      parseCSV("./data/cluster_profile_summary.csv", (rows)=>{
-        renderTable(document.getElementById("clusterProfileTable"), rows, 50);
-      });
-
-      parseCSV("./data/model_selection_results.csv", (rows)=>{
-        renderTable(document.getElementById("modelSelectionTable"), rows, 20);
-      });
-
-      parseCSV("./data/lift_deciles_hgb.csv", (rows)=>{
-        renderLiftChart(rows);
-      });
-
-      parseCSV("./data/order_return_predictions.csv", (rows)=>{
-        renderMlMetrics(rows);
-      });
-    }
-
-    // Lightbox behavior
-    const lightbox = document.getElementById("lightbox");
-    const lightboxImg = document.getElementById("lightboxImg");
-    const lightboxClose = document.getElementById("lightboxClose");
-
-    function openLightbox(src){
-      lightboxImg.src = src;
-      lightbox.classList.add("open");
-      lightbox.setAttribute("aria-hidden", "false");
-    }
-    function closeLightbox(){
-      lightbox.classList.remove("open");
-      lightbox.setAttribute("aria-hidden", "true");
-      lightboxImg.src = "";
-    }
-
-    document.querySelectorAll(".gallery-item").forEach(el=>{
-      el.addEventListener("click", ()=>{
-        const src = el.getAttribute("data-full");
-        if(src) openLightbox(src);
-      });
-    });
-
-    lightboxClose.addEventListener("click", closeLightbox);
-    lightbox.addEventListener("click", (e)=>{
-      if(e.target === lightbox) closeLightbox();
-    });
-
-    window.addEventListener("DOMContentLoaded", loadAll);
-  </script>
-</body>
-</html>
-

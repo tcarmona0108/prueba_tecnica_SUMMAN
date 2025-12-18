@@ -117,11 +117,6 @@
       margin:0;
       max-width:70ch;
     }
-    .hero-cards{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:12px;
-    }
 
     /* Cards */
     .card{
@@ -142,6 +137,7 @@
       font-size:14px;
       line-height:1.55;
     }
+
     .pill{
       display:inline-flex; align-items:center;
       gap:8px;
@@ -158,6 +154,7 @@
       background:var(--brand);
       display:inline-block;
     }
+
     .btn{
       display:inline-flex;
       align-items:center;
@@ -172,7 +169,6 @@
       text-decoration:none;
       cursor:pointer;
     }
-    .btn:hover{filter:brightness(0.97)}
     .btn.secondary{
       background:#fff;
       border:1px solid var(--line);
@@ -197,19 +193,25 @@
       font-size:13px;
     }
 
-    /* Two-column layout */
+    /* Grid */
     .grid-2{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap:14px;
     }
+    .grid-3{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap:12px;
+    }
     @media (max-width: 980px){
       .hero-grid{grid-template-columns:1fr}
       .grid-2{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:1fr}
       .nav{display:none}
     }
 
-    /* Power BI responsive */
+    /* Embeds (Power BI / PPT) */
     .embed{
       border-radius:var(--radius);
       overflow:hidden;
@@ -220,29 +222,14 @@
     .embed .ratio{
       position:relative;
       width:100%;
-      padding-top:62.25%; /* 600x373.5 */
+      padding-top:62.25%; /* default: 600x373.5 */
     }
+    .embed.ratio-16x9 .ratio{ padding-top:56.25%; }
     .embed iframe{
       position:absolute; inset:0;
       width:100%; height:100%;
       border:0;
     }
-
-    /* Upload / Dropzone */
-    .dropzone{
-      border:2px dashed rgba(160,194,45,0.55);
-      background:rgba(160,194,45,0.08);
-      border-radius:var(--radius);
-      padding:16px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-    }
-    .dropzone strong{display:block; margin-bottom:4px}
-    .dropzone small{color:var(--muted)}
-    .dropzone input{display:none}
-    .drop-actions{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
 
     /* Tables */
     .table-wrap{
@@ -273,21 +260,7 @@
     }
 
     /* Charts */
-    .chart-card{
-      padding:14px;
-    }
-    .chart-holder{
-      height:320px;
-    }
-
-    /* Footer */
-    footer{
-      margin:26px 0 8px;
-      color:var(--muted);
-      font-size:12px;
-      text-align:center;
-    }
-
+    .chart-holder{ height:320px; }
     .hint{
       color:var(--muted);
       font-size:12px;
@@ -295,6 +268,28 @@
       line-height:1.45;
     }
 
+    /* Gallery */
+    .gallery-item{
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      overflow:hidden;
+      background:#fff;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
+      cursor:pointer;
+    }
+    .gallery-item img{
+      width:100%;
+      display:block;
+      aspect-ratio: 16 / 9;
+      object-fit:cover;
+      background:#f1f5f9;
+    }
+    .gallery-caption{
+      padding:10px 12px;
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.35;
+    }
     .callout{
       border-left:4px solid var(--brand);
       padding:12px 12px;
@@ -302,7 +297,6 @@
       border-radius:12px;
       border:1px solid var(--line);
     }
-
     code.inline{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       background:#f1f5f9;
@@ -310,11 +304,47 @@
       border-radius:8px;
       font-size:12px;
     }
+
+    /* Lightbox */
+    .lightbox{
+      position:fixed;
+      inset:0;
+      background:rgba(15,23,42,0.78);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      z-index:1000;
+    }
+    .lightbox.open{display:flex;}
+    .lightbox img{
+      max-width:min(1120px, 96vw);
+      max-height:92vh;
+      border-radius:16px;
+      box-shadow:var(--shadow);
+      background:#fff;
+    }
+    .lightbox .close{
+      position:absolute;
+      top:14px; right:14px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:8px 10px;
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    footer{
+      margin:26px 0 8px;
+      color:var(--muted);
+      font-size:12px;
+      text-align:center;
+    }
   </style>
 </head>
 
 <body>
-  <!-- Topbar -->
   <div class="topbar">
     <div class="topbar-inner">
       <div class="brand">
@@ -325,26 +355,24 @@
         <a href="#overview">Resumen</a>
         <a href="#punto1">Punto 1</a>
         <a href="#punto2">Punto 2</a>
-        <a href="#artifacts">Artifacts</a>
+        <a href="#resultados">Resultados</a>
       </nav>
     </div>
   </div>
 
   <div class="container" id="overview">
-    <!-- Hero -->
     <div class="hero">
       <div class="hero-grid">
         <div>
           <span class="kicker">Entrega Técnica · Analítica & ML</span>
-          <h1>Entrega organizada: EDA, Segmentación y Machine Learning</h1>
+          <h1>EDA, Segmentación y Machine Learning</h1>
           <p class="subtitle">
-            Esta página centraliza los entregables del ejercicio: un reporte interactivo en Power BI (EDA),
-            el repositorio con código y notebooks, y los resultados de segmentación de clientes (2.1) y
-            predicción de devoluciones (2.2).
+            Página ejecutiva de entregables: EDA en Power BI, evidencia del ETL y modelo relacional,
+            y el punto 2 con segmentación (2.1) + modelo predictivo (2.2).
           </p>
 
           <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
-            <a class="pill" href="#punto1"><span class="dot"></span><strong>Punto 1</strong> · EDA en Power BI</a>
+            <a class="pill" href="#punto1"><span class="dot"></span><strong>Punto 1</strong> · EDA + ETL</a>
             <a class="pill" href="#punto2"><span class="dot"></span><strong>Punto 2</strong> · Segmentación + ML</a>
             <a class="pill" href="https://github.com/tcarmona0108/prueba_tecnica_SUMMAN" target="_blank" rel="noreferrer">
               <span class="dot"></span><strong>Repositorio</strong> · GitHub
@@ -352,38 +380,46 @@
           </div>
         </div>
 
-        <div class="hero-cards">
-          <div class="card">
-            <h3>Entregables incluidos</h3>
-            <p>
-              • Power BI (EDA) embebido<br>
-              • PPT (Punto 2) descargable<br>
-              • CSVs de resultados (segmentación y ML)<br>
-              • Visualización automática (tablas y gráficos)
-            </p>
-          </div>
-
-          <div class="card">
-            <h3>Cómo usar esta página</h3>
-            <p>
-              Si los archivos están en <code class="inline">/artifacts</code>, se renderizan solos.
-              También puedes arrastrar y soltar CSVs en la sección “Artifacts”.
-            </p>
-          </div>
+        <div class="card">
+          <h3>Entregables visibles</h3>
+          <p>
+            • Power BI embebido (EDA)<br>
+            • Evidencia ETL (imágenes) + modelo relacional<br>
+            • PPT Punto 2 embebido (SharePoint)<br>
+            • Tablas y gráfico desde CSVs del modelo (sin subir archivos)
+          </p>
         </div>
       </div>
     </div>
 
-    <!-- Punto 1 -->
+    <!-- PUNTO 1 -->
     <section id="punto1">
       <div class="section-title">
-        <h2>Punto 1 — Análisis Exploratorio (Power BI)</h2>
-        <span>Reporte interactivo embebido</span>
+        <h2>Punto 1 — EDA (Power BI) + Evidencia de ETL</h2>
+        <span>Diagnóstico, limpieza y modelo relacional</span>
+      </div>
+
+      <div class="card">
+        <h3>Resumen del ETL (limpieza y consistencia)</h3>
+        <p>
+          Se realizó limpieza y transformación enfocada en consistencia de llaves, calidad de campos y preparación para análisis:
+          (1) eliminación de duplicados en tablas maestras, (2) conversión de campos numéricos con valores no numéricos,
+          (3) tratamiento de outliers y valores atípicos en la tabla principal de ventas,
+          (4) estandarización/ortografía en algunos campos categóricos,
+          (5) corrección de valores mal imputados y validación básica de integridad referencial.
+        </p>
+        <p class="hint">
+          Este bloque se apoya con pantallazos (abajo) del proceso y con la imagen del modelo relacional.
+        </p>
+      </div>
+
+      <div class="section-title" style="margin-top:14px;">
+        <h2>Power BI — Reporte interactivo</h2>
+        <span>EDA publicado</span>
       </div>
 
       <div class="embed">
         <div class="ratio">
-          <!-- Tu embed exacto -->
           <iframe title="EDA_PruebaTecnica_SUMMAN"
             src="https://app.powerbi.com/view?r=eyJrIjoiODFmNTg2ZjMtYjMwYi00NGU4LThlYzMtNDFiZWVkY2Q3MWY1IiwidCI6IjU3N2ZjMWQ4LTA5MjItNDU4ZS04N2JmLWVjNGY0NTVlYjYwMCIsImMiOjR9"
             allowfullscreen="true">
@@ -391,161 +427,173 @@
         </div>
       </div>
 
+      <div class="section-title" style="margin-top:14px;">
+        <h2>ETL — Pantallazos del proceso</h2>
+        <span>Click para ampliar</span>
+      </div>
+
+      <div class="grid-3">
+        <div class="gallery-item" data-full="./assets/img/etl_01.png">
+          <img src="./assets/img/etl_01.png" alt="ETL 01" onerror="this.style.display='none'">
+          <div class="gallery-caption"><strong>ETL 1:</strong> Duplicados en tablas maestras (Customer/Product) y limpieza inicial.</div>
+        </div>
+        <div class="gallery-item" data-full="./assets/img/etl_02.png">
+          <img src="./assets/img/etl_02.png" alt="ETL 02" onerror="this.style.display='none'">
+          <div class="gallery-caption"><strong>ETL 2:</strong> Conversión de numéricos (Sales/Profit), valores no válidos y tratamiento de outliers.</div>
+        </div>
+        <div class="gallery-item" data-full="./assets/img/etl_03.png">
+          <img src="./assets/img/etl_03.png" alt="ETL 03" onerror="this.style.display='none'">
+          <div class="gallery-caption"><strong>ETL 3:</strong> Estandarización de campos, ortografía y validaciones de consistencia.</div>
+        </div>
+      </div>
+
+      <div class="section-title" style="margin-top:14px;">
+        <h2>Modelo relacional</h2>
+        <span>Click para ampliar</span>
+      </div>
+
+      <div class="gallery-item" data-full="./assets/img/modelo_relacional.png" style="cursor:pointer;">
+        <img src="./assets/img/modelo_relacional.png" alt="Modelo relacional" onerror="this.style.display='none'" style="aspect-ratio:auto; object-fit:contain; padding:12px;">
+        <div class="gallery-caption"><strong>Modelo relacional:</strong> esquema de tablas y relaciones utilizado para análisis y modelamiento.</div>
+      </div>
+
       <p class="hint">
-        Nota: el archivo <code class="inline">.pbix</code> no se visualiza en navegador; la forma correcta de “mostrarlo” es el embed del reporte publicado (como arriba).
+        Cuando me compartas las imágenes, basta con guardarlas con estos nombres en <code class="inline">./assets/img/</code>
+        (o actualizas los nombres en el HTML).
       </p>
     </section>
 
-    <!-- Punto 2 -->
+    <!-- PUNTO 2 -->
     <section id="punto2">
       <div class="section-title">
         <h2>Punto 2 — Segmentación (2.1) y Machine Learning (2.2)</h2>
-        <span>Resumen ejecutivo + acceso a código y resultados</span>
+        <span>Repositorio + presentación + resultados</span>
       </div>
 
       <div class="grid-2">
         <div class="card">
           <h3>2.1 Segmentación de clientes</h3>
           <p>
-            Customer 360 (1 fila por cliente) integrando valor, RFM, pricing (descuentos),
-            operación (lead time, devoluciones) y mix. Clustering con K-Means sobre variables numéricas,
-            con escalado robusto, transformaciones y validación interna (Silhouette/DBI/CH) + estabilidad (ARI).
+            Customer 360 (1 fila por cliente) integrando valor, RFM, descuentos, devoluciones, logística y diversidad de compra.
+            Clustering con K-Means sobre variables numéricas, con escalado robusto, transformaciones y evaluación interna + estabilidad.
           </p>
           <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-            <a class="btn secondary" href="#segmentation">Ver resultados 2.1</a>
+            <a class="btn secondary" href="#resultados">Ver resultados en tablas</a>
           </div>
         </div>
 
         <div class="card">
-          <h3>2.2 ML — Predicción de devoluciones</h3>
+          <h3>2.2 Predicción de devoluciones (ML)</h3>
           <p>
-            Modelo supervisado a nivel orden (Order_ID) para priorizar órdenes con mayor riesgo de devolución.
-            Validación temporal, feature engineering sin leakage (histórico con shift) y evaluación con lift por deciles.
+            Modelo supervisado a nivel orden para priorizar riesgo de devolución. Validación temporal,
+            features sin leakage (histórico con shift) y evaluación con lift por deciles para toma de decisiones operativas.
           </p>
           <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-            <a class="btn secondary" href="#ml">Ver resultados 2.2</a>
-            <a class="btn" href="https://github.com/tcarmona0108/prueba_tecnica_SUMMAN" target="_blank" rel="noreferrer">
-              Abrir repositorio
-            </a>
+            <a class="btn" href="https://github.com/tcarmona0108/prueba_tecnica_SUMMAN" target="_blank" rel="noreferrer">Abrir repositorio</a>
+            <a class="btn secondary" href="#resultados">Ver métricas / lift</a>
           </div>
         </div>
       </div>
 
-      <div class="callout" style="margin-top:14px;">
-        <strong>Presentación Punto 2 (descargable)</strong><br>
+      <div class="section-title" style="margin-top:14px;">
+        <h2>Presentación Punto 2 (embebida)</h2>
+        <span>SharePoint / PowerPoint Online</span>
+      </div>
+
+      <div class="embed ratio-16x9">
+        <div class="ratio">
+          <!-- Intento de embed directo. Si SharePoint requiere login, lo pedirá aquí. -->
+          <iframe
+            title="Punto 2 - Presentación"
+            src="https://unaledu-my.sharepoint.com/:p:/g/personal/tcarmona_unal_edu_co/IQA_sCC08GrQR5qlspVZ5XteAdDX_U-dQnyGDWvAwPlRZNU?e=LtXAyN&nav=eyJzSWQiOjI2OH0"
+            allowfullscreen="true">
+          </iframe>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top:12px;">
+        <strong>Si el embed no carga (por permisos o navegador)</strong><br>
         <span style="color:var(--muted); font-size:13px;">
-          Si publicas el PPTX en <code class="inline">/artifacts</code>, quedará disponible aquí.
+          Usa el botón para abrir en otra pestaña (misma experiencia, pero sin restricciones de iframe).
         </span>
         <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn" href="./artifacts/Punto2_SUMMAN_Tomas_Carmona.pptx" download>Descargar PPT Punto 2</a>
-          <a class="btn secondary" href="#artifacts">Ver artifacts</a>
+          <a class="btn" href="https://unaledu-my.sharepoint.com/:p:/g/personal/tcarmona_unal_edu_co/IQA_sCC08GrQR5qlspVZ5XteAdDX_U-dQnyGDWvAwPlRZNU?e=LtXAyN&nav=eyJzSWQiOjI2OH0" target="_blank" rel="noreferrer">
+            Abrir presentación
+          </a>
+          <!-- opcional: descarga local si la publicas en /docs -->
+          <a class="btn secondary" href="./docs/Punto2_SUMMAN_Tomas_Carmona.pptx" download>
+            Descargar PPT (opcional)
+          </a>
         </div>
       </div>
     </section>
 
-    <!-- Artifacts -->
-    <section id="artifacts">
+    <!-- RESULTADOS DESDE CSV -->
+    <section id="resultados">
       <div class="section-title">
-        <h2>Artifacts — Archivos y visualización</h2>
-        <span>Arrastra CSVs para renderizar tablas y gráficos</span>
+        <h2>Resultados (desde CSV)</h2>
+        <span>Visualización + descarga</span>
       </div>
 
-      <div class="dropzone" id="dropzone">
-        <div>
-          <strong>Subir artifacts (CSV) para visualizar</strong>
-          <small>Soportado: cluster_profile_summary.csv, model_selection_results.csv, lift_deciles_hgb.csv, order_return_predictions.csv</small>
-        </div>
-        <div class="drop-actions">
-          <label class="btn secondary" for="fileInput">Seleccionar archivos</label>
-          <input id="fileInput" type="file" multiple accept=".csv" />
-          <button class="btn" id="loadDefaultsBtn" type="button">Cargar desde /artifacts</button>
-        </div>
-      </div>
-
-      <p class="hint">
-        Para publicación fija, sube los archivos a la carpeta <code class="inline">/artifacts</code>.
-        Para demo local, puedes arrastrarlos aquí y se visualizarán en el navegador (no se guardan).
-      </p>
-
-      <!-- 2.1 Segmentation outputs -->
-      <section id="segmentation">
-        <div class="section-title">
-          <h2>2.1 — Resultados de segmentación</h2>
-          <span>Tabla ejecutiva por cluster + selección de modelo</span>
-        </div>
-
-        <div class="grid-2">
-          <div class="card chart-card">
-            <h3>Perfil por cluster</h3>
-            <p>Se llena con <code class="inline">cluster_profile_summary.csv</code>.</p>
-            <div class="table-wrap" style="margin-top:10px;">
-              <table id="clusterProfileTable">
-                <thead><tr><th>Esperando archivo...</th></tr></thead>
-                <tbody></tbody>
-              </table>
-            </div>
-          </div>
-
-          <div class="card chart-card">
-            <h3>Selección de modelo (tuning)</h3>
-            <p>Se llena con <code class="inline">model_selection_results.csv</code>.</p>
-            <div class="table-wrap" style="margin-top:10px;">
-              <table id="modelSelectionTable">
-                <thead><tr><th>Esperando archivo...</th></tr></thead>
-                <tbody></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 2.2 ML outputs -->
-      <section id="ml">
-        <div class="section-title">
-          <h2>2.2 — Resultados ML (devoluciones)</h2>
-          <span>Lift por deciles + métricas operativas Top 10%</span>
-        </div>
-
-        <div class="grid-2">
-          <div class="card chart-card">
-            <h3>Lift por deciles</h3>
-            <p>Se llena con <code class="inline">lift_deciles_hgb.csv</code>.</p>
-            <div class="chart-holder">
-              <canvas id="liftChart"></canvas>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>Métricas operativas (Top 10%)</h3>
-            <p>Se calcula desde <code class="inline">order_return_predictions.csv</code> (y_true + probabilidad).</p>
-            <div style="margin-top:12px;" id="mlMetrics">
-              <p style="color:var(--muted); margin:0;">Esperando archivo...</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="card chart-card" style="margin-top:14px;">
-          <h3>Tabla de scoring por orden (extracto)</h3>
-          <p>Se llena con <code class="inline">order_return_predictions.csv</code>.</p>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Perfil por cluster (2.1)</h3>
+          <p>Archivo: <code class="inline">./data/cluster_profile_summary.csv</code></p>
           <div class="table-wrap" style="margin-top:10px;">
-            <table id="orderPredTable">
-              <thead><tr><th>Esperando archivo...</th></tr></thead>
+            <table id="clusterProfileTable">
+              <thead><tr><th>Cargando...</th></tr></thead>
               <tbody></tbody>
             </table>
           </div>
+          <div style="margin-top:10px;">
+            <a class="btn secondary" href="./data/cluster_profile_summary.csv" download>Descargar CSV</a>
+          </div>
         </div>
-      </section>
+
+        <div class="card">
+          <h3>Selección de modelo (2.1)</h3>
+          <p>Archivo: <code class="inline">./data/model_selection_results.csv</code></p>
+          <div class="table-wrap" style="margin-top:10px;">
+            <table id="modelSelectionTable">
+              <thead><tr><th>Cargando...</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div style="margin-top:10px;">
+            <a class="btn secondary" href="./data/model_selection_results.csv" download>Descargar CSV</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top:14px;">
+        <div class="card">
+          <h3>Lift por deciles (2.2)</h3>
+          <p>Archivo: <code class="inline">./data/lift_deciles_hgb.csv</code></p>
+          <div class="chart-holder">
+            <canvas id="liftChart"></canvas>
+          </div>
+          <div style="margin-top:10px;">
+            <a class="btn secondary" href="./data/lift_deciles_hgb.csv" download>Descargar CSV</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Métricas operativas Top 10% (2.2)</h3>
+          <p>Archivo: <code class="inline">./data/order_return_predictions.csv</code></p>
+          <div style="margin-top:12px;" id="mlMetrics">
+            <p style="color:var(--muted); margin:0;">Cargando...</p>
+          </div>
+          <div style="margin-top:10px;">
+            <a class="btn secondary" href="./data/order_return_predictions.csv" download>Descargar CSV</a>
+          </div>
+        </div>
+      </div>
 
       <div class="card" style="margin-top:14px;">
-        <h3>Descargas directas</h3>
-        <p>Si los archivos están publicados en <code class="inline">/artifacts</code>, estos links funcionarán:</p>
-        <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="pill" href="./artifacts/cluster_profile_summary.csv" download><span class="dot"></span><strong>cluster_profile_summary.csv</strong></a>
-          <a class="pill" href="./artifacts/customer_segmentation_output.csv" download><span class="dot"></span><strong>customer_segmentation_output.csv</strong></a>
-          <a class="pill" href="./artifacts/model_selection_results.csv" download><span class="dot"></span><strong>model_selection_results.csv</strong></a>
-          <a class="pill" href="./artifacts/lift_deciles_hgb.csv" download><span class="dot"></span><strong>lift_deciles_hgb.csv</strong></a>
-          <a class="pill" href="./artifacts/order_return_predictions.csv" download><span class="dot"></span><strong>order_return_predictions.csv</strong></a>
-          <a class="pill" href="./artifacts/Punto2_SUMMAN_Tomas_Carmona.pptx" download><span class="dot"></span><strong>Punto2_SUMMAN_Tomas_Carmona.pptx</strong></a>
+        <h3>Descarga adicional</h3>
+        <p>Dataset completo de segmentación (opcional): <code class="inline">./data/customer_segmentation_output.csv</code></p>
+        <div style="margin-top:10px;">
+          <a class="btn secondary" href="./data/customer_segmentation_output.csv" download>Descargar customer_segmentation_output.csv</a>
         </div>
       </div>
     </section>
@@ -555,45 +603,24 @@
     </footer>
   </div>
 
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="close" id="lightboxClose" type="button">Cerrar</button>
+    <img id="lightboxImg" alt="Imagen ampliada" />
+  </div>
+
   <script>
-    // -----------------------------
-    // Utilities
-    // -----------------------------
-    const filesMap = new Map();
     const BRAND = "#A0C22D";
 
-    function parseCSV(fileOrUrl, onDone){
-      if(typeof fileOrUrl === "string"){
-        Papa.parse(fileOrUrl, {
-          download:true,
-          header:true,
-          skipEmptyLines:true,
-          dynamicTyping:false,
-          complete: (res) => onDone(res.data),
-          error: () => onDone(null)
-        });
-      } else {
-        Papa.parse(fileOrUrl, {
-          header:true,
-          skipEmptyLines:true,
-          dynamicTyping:false,
-          complete: (res) => onDone(res.data),
-          error: () => onDone(null)
-        });
-      }
-    }
-
-    function renderTable(tableEl, rows, maxRows=20){
-      if(!rows || !rows.length){
-        tableEl.innerHTML = "<thead><tr><th>No hay datos</th></tr></thead><tbody></tbody>";
-        return;
-      }
-      const cols = Object.keys(rows[0]);
-      const head = `<thead><tr>${cols.map(c=>`<th>${escapeHtml(c)}</th>`).join("")}</tr></thead>`;
-      const bodyRows = rows.slice(0, maxRows).map(r=>{
-        return `<tr>${cols.map(c=>`<td>${escapeHtml(r[c])}</td>`).join("")}</tr>`;
-      }).join("");
-      tableEl.innerHTML = head + `<tbody>${bodyRows}</tbody>`;
+    function parseCSV(url, onDone){
+      Papa.parse(url, {
+        download:true,
+        header:true,
+        skipEmptyLines:true,
+        dynamicTyping:false,
+        complete: (res) => onDone(res.data),
+        error: () => onDone(null)
+      });
     }
 
     function escapeHtml(v){
@@ -606,19 +633,29 @@
         .replaceAll("'","&#039;");
     }
 
+    function renderTable(tableEl, rows, maxRows=25){
+      if(!rows || !rows.length){
+        tableEl.innerHTML = "<thead><tr><th>No hay datos</th></tr></thead><tbody></tbody>";
+        return;
+      }
+      const cols = Object.keys(rows[0]);
+      const head = `<thead><tr>${cols.map(c=>`<th>${escapeHtml(c)}</th>`).join("")}</tr></thead>`;
+      const bodyRows = rows.slice(0, maxRows).map(r=>{
+        return `<tr>${cols.map(c=>`<td>${escapeHtml(r[c])}</td>`).join("")}</tr>`;
+      }).join("");
+      tableEl.innerHTML = head + `<tbody>${bodyRows}</tbody>`;
+    }
+
     function toNum(x){
       const n = Number(String(x).replace(",", "."));
       return Number.isFinite(n) ? n : NaN;
     }
 
-    // -----------------------------
-    // 2.2 Lift chart
-    // -----------------------------
+    // Lift chart
     let liftChart = null;
     function renderLiftChart(rows){
       if(!rows || !rows.length) return;
 
-      // expects: decile, return_rate, cum_return_share
       const sorted = [...rows].sort((a,b)=>toNum(a.decile)-toNum(b.decile));
       const labels = sorted.map(r => String(r.decile));
       const returnRate = sorted.map(r => toNum(r.return_rate));
@@ -653,9 +690,7 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: {
-            legend: { position: "bottom" }
-          },
+          plugins: { legend: { position: "bottom" } },
           scales: {
             y: {
               beginAtZero:true,
@@ -672,11 +707,8 @@
       });
     }
 
-    // -----------------------------
-    // 2.2 Metrics from order_return_predictions.csv
-    // -----------------------------
+    // Metrics from order_return_predictions.csv
     function computeTopPctMetrics(rows, topPct=0.10){
-      // expects: y_true_returned, p_return_hgb OR similar
       if(!rows || !rows.length) return null;
 
       const yKey = Object.keys(rows[0]).find(k => k.toLowerCase().includes("y_true"));
@@ -719,19 +751,15 @@
       box.innerHTML = `
         <div class="table-wrap" style="min-width:unset;">
           <table style="min-width:unset;">
-            <thead>
-              <tr>
-                <th>Métrica</th><th>Valor</th>
-              </tr>
-            </thead>
+            <thead><tr><th>Métrica</th><th>Valor</th></tr></thead>
             <tbody>
               <tr><td>N (test)</td><td>${m.n}</td></tr>
               <tr><td>Top 10% (n)</td><td>${m.nTop}</td></tr>
               <tr><td>Base rate (devoluciones)</td><td>${(m.baseRate*100).toFixed(2)}%</td></tr>
               <tr><td>Return rate en Top 10%</td><td>${(m.topRate*100).toFixed(2)}%</td></tr>
               <tr><td>Lift (Top 10%)</td><td>${m.lift.toFixed(2)}×</td></tr>
-              <tr><td>Precision (Top 10%)</td><td>${(m.precision*100).toFixed(2)}%</td></tr>
-              <tr><td>Recall (Top 10%)</td><td>${(m.recall*100).toFixed(2)}%</td></tr>
+              <tr><td>Precision (Top 10%)</td> <td>${(m.precision*100).toFixed(2)}%</td></tr>
+              <tr><td>Recall (Top 10%)</td>    <td>${(m.recall*100).toFixed(2)}%</td></tr>
               <tr><td>TP / FP / FN</td><td>${m.tp} / ${m.fp} / ${m.fn}</td></tr>
             </tbody>
           </table>
@@ -739,96 +767,55 @@
       `;
     }
 
-    // -----------------------------
-    // Router for files
-    // -----------------------------
-    function handleDataset(filename, rows){
-      const name = filename.toLowerCase();
-
-      if(name.includes("cluster_profile_summary")){
+    // Load CSVs (fixed paths)
+    function loadAll(){
+      parseCSV("./data/cluster_profile_summary.csv", (rows)=>{
         renderTable(document.getElementById("clusterProfileTable"), rows, 50);
-        return;
-      }
-      if(name.includes("model_selection_results")){
+      });
+
+      parseCSV("./data/model_selection_results.csv", (rows)=>{
         renderTable(document.getElementById("modelSelectionTable"), rows, 20);
-        return;
-      }
-      if(name.includes("lift_deciles")){
+      });
+
+      parseCSV("./data/lift_deciles_hgb.csv", (rows)=>{
         renderLiftChart(rows);
-        return;
-      }
-      if(name.includes("order_return_predictions")){
+      });
+
+      parseCSV("./data/order_return_predictions.csv", (rows)=>{
         renderMlMetrics(rows);
-        renderTable(document.getElementById("orderPredTable"), rows, 25);
-        return;
-      }
-
-      // fallback: show nothing (you can extend)
-      console.log("CSV cargado pero no reconocido:", filename);
-    }
-
-    // -----------------------------
-    // Load defaults from /artifacts
-    // -----------------------------
-    function loadDefaults(){
-      const defaults = [
-        "./artifacts/cluster_profile_summary.csv",
-        "./artifacts/model_selection_results.csv",
-        "./artifacts/lift_deciles_hgb.csv",
-        "./artifacts/order_return_predictions.csv"
-      ];
-
-      defaults.forEach(url => {
-        parseCSV(url, (rows)=>{
-          if(!rows) return;
-          const filename = url.split("/").pop();
-          handleDataset(filename, rows);
-        });
       });
     }
 
-    // -----------------------------
-    // Drag & drop + input
-    // -----------------------------
-    const dropzone = document.getElementById("dropzone");
-    const fileInput = document.getElementById("fileInput");
-    const loadDefaultsBtn = document.getElementById("loadDefaultsBtn");
+    // Lightbox behavior
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightboxImg");
+    const lightboxClose = document.getElementById("lightboxClose");
 
-    loadDefaultsBtn.addEventListener("click", loadDefaults);
-
-    function processFiles(fileList){
-      [...fileList].forEach(f=>{
-        if(!f.name.toLowerCase().endsWith(".csv")) return;
-        parseCSV(f, (rows)=>{
-          filesMap.set(f.name, rows);
-          handleDataset(f.name, rows);
-        });
-      });
+    function openLightbox(src){
+      lightboxImg.src = src;
+      lightbox.classList.add("open");
+      lightbox.setAttribute("aria-hidden", "false");
+    }
+    function closeLightbox(){
+      lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden", "true");
+      lightboxImg.src = "";
     }
 
-    fileInput.addEventListener("change", (e)=>{
-      if(e.target.files) processFiles(e.target.files);
+    document.querySelectorAll(".gallery-item").forEach(el=>{
+      el.addEventListener("click", ()=>{
+        const src = el.getAttribute("data-full");
+        if(src) openLightbox(src);
+      });
     });
 
-    dropzone.addEventListener("dragover", (e)=>{
-      e.preventDefault();
-      dropzone.style.background = "rgba(160,194,45,0.14)";
+    lightboxClose.addEventListener("click", closeLightbox);
+    lightbox.addEventListener("click", (e)=>{
+      if(e.target === lightbox) closeLightbox();
     });
 
-    dropzone.addEventListener("dragleave", ()=>{
-      dropzone.style.background = "rgba(160,194,45,0.08)";
-    });
-
-    dropzone.addEventListener("drop", (e)=>{
-      e.preventDefault();
-      dropzone.style.background = "rgba(160,194,45,0.08)";
-      if(e.dataTransfer?.files) processFiles(e.dataTransfer.files);
-    });
-
-    // Auto-load defaults if present
-    window.addEventListener("DOMContentLoaded", ()=>{
-      loadDefaults();
-    });
+    window.addEventListener("DOMContentLoaded", loadAll);
   </script>
 </body>
 </html>
+
